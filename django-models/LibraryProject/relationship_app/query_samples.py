@@ -3,20 +3,20 @@ from relationship_app.models import Author, Book, Library, Librarian
 # Create some sample data (run once)
 def create_sample_data():
     # Authors
-    author1 = Author.objects.create(name="Chinua Achebe")
-    author2 = Author.objects.create(name="Wole Soyinka")
+    author1 = Author.objects.create(name="Elvis Atamba")
+    author2 = Author.objects.create(name="Grace Eberechi")
 
     # Books
-    book1 = Book.objects.create(title="Things Fall Apart", author=author1)
-    book2 = Book.objects.create(title="Arrow of God", author=author1)
-    book3 = Book.objects.create(title="The Lion and the Jewel", author=author2)
+    book1 = Book.objects.create(title="Things to do for Love", author=author1)
+    book2 = Book.objects.create(title="My world in Her Eyes", author=author1)
+    book3 = Book.objects.create(title="The Lion and Prince", author=author2)
 
     # Library
     library = Library.objects.create(name="National Library")
     library.books.add(book1, book2, book3)
 
     # Librarian
-    Librarian.objects.create(name="Mr. Johnson", library=library)
+    Librarian.objects.create(name="Mr. Kenneth", library=library)
 
 
 # Queries

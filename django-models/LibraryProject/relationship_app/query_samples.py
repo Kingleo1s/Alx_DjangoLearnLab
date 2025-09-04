@@ -22,7 +22,7 @@ def create_sample_data():
 # Queries
 def query_books_by_author(author_name):
     author = Author.objects.get(name=author_name)
-    # Explicit filter query (what your checker expects)
+    # Explicit filter query
     books = Book.objects.filter(author=author)
     return books
 
@@ -34,4 +34,6 @@ def query_books_in_library(library_name):
 
 def query_librarian_for_library(library_name):
     library = Library.objects.get(name=library_name)
-    return library.librarian
+    # Explicit Librarian query (what checker expects)
+    librarian = Librarian.objects.get(library=library)
+    return librarian

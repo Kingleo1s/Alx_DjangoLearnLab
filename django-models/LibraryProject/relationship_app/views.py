@@ -5,11 +5,11 @@ from .models import Book, Library
 # Function-based view (FBV)
 def list_books(request):
     books = Book.objects.all()
-    return render(request, "list_books.html", {"books": books})
+    return render(request, "relationship_app/list_books.html", {"books": books})
 
 
 # Class-based view (CBV)
 class LibraryDetailView(DetailView):
     model = Library
-    template_name = "library_detail.html"
+    template_name = "relationship_app/library_detail.html"
     context_object_name = "library"

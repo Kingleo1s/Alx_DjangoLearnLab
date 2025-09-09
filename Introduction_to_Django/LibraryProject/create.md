@@ -6,4 +6,3 @@ book = Book.objects.create(
     publication_year=1949
 )
 book
-# <Book: 1984 by George Orwell (1949)>

@@ -1,6 +1,6 @@
 from django.db import models
 
-# Author -> Book (One-to-Many using ForeignKey)
+# Author -> Book (One-to-Many with ForeignKey)
 class Author(models.Model):
     name = models.CharField(max_length=100)
 
@@ -32,5 +32,3 @@ class Librarian(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.library.name})"
-
-# Create your models here.

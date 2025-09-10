@@ -52,7 +52,6 @@ class UserProfile(models.Model):
         return f"{self.user.username} - {self.role}"
 
 
-# ✅ Automatically create UserProfile on user creation
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

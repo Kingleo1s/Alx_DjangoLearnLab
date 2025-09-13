@@ -38,11 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bookshelf',
-<<<<<<< HEAD
     'relationship_app',
-=======
-    'relationship_app'
->>>>>>> 1f8a0088df2ae69689cb3138167a09da8b69c305
+    'accounts'
+
 ]
 
 MIDDLEWARE = [

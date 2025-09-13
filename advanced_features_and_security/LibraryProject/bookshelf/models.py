@@ -1,14 +1,23 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import BaseUserManager
 
 
-class CustomUser(AbstractUser):
-    date_of_birth = models.DateField(null=True, blank=True)
-    profile_photo = models.ImageField(upload_to="profile_photos/", null=True, blank=True)
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=200)
+    published_date = models.DateField()
+
+    class Meta:
+        permissions = [
+            ("can_create", "Can create a book"),
+            ("can_edit", "Can edit a book"),
+            ("can_delete", "Can delete a book"),
+            ("can_view", "Can view a book"),
+        ]
 
     def __str__(self):
-        return self.username
+        return self.title
+
 
 
 class CustomUserManager(BaseUserManager):
@@ -25,19 +34,14 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
-        if extra_fields.get("is_staff") is not True:
+        if extra_fields.get("is_staff"):
             raise ValueError("Superuser must have is_staff=True.")
-        if extra_fields.get("is_superuser") is not True:
+        if extra_fields.get("is_superuser"):
             raise ValueError("Superuser must have is_superuser=True.")
 
         return self.create_user(username, email, password, **extra_fields)
 
 
-class CustomUser(AbstractUser):
-    date_of_birth = models.DateField(null=True, blank=True)
-    profile_photo = models.ImageField(upload_to="profile_photos/", null=True, blank=True)
 
-    objects = CustomUserManager()  # ✅ link the manager
 
-    def __str__(self):
-        return self.username
+

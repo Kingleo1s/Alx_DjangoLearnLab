@@ -1,0 +1,13 @@
+<!-- LibraryProject/bookshelf/templates/bookshelf/form_example.html -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Example Form</title></head>
+<body>
+  <h1>Submit</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

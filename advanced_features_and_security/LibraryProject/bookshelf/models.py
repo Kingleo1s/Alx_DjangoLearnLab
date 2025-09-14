@@ -7,6 +7,7 @@ class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=200)
     published_date = models.DateField()
+    publication_year = models.IntegerField(null=True, blank=True)
 
     class Meta:
         permissions = [
@@ -47,6 +48,7 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     # Add extra fields if needed
     role = models.CharField(max_length=50, blank=True, null=True)
+    date_of_birth = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.username

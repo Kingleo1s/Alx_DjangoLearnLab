@@ -11,3 +11,8 @@ def book_list(request):
     # Pass them into the template context
     return render(request, 'bookshelf/book_list.html', {'books': books})
 
+
+def search_books(request):
+    query = request.GET.get("q", "")
+    books = Book.objects.filter(title__icontains=query)  # ORM prevents SQL injection
+    return render(request, "bookshelf/book_list.html", {"books": books})

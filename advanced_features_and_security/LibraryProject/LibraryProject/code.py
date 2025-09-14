@@ -1,14 +1,13 @@
-
 from .models import Library
 from django.views.generic.detail import DetailView
-from django.contrib.auth import login, logout
+from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import user_passes_test
+from .models import UserProfile
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import permission_required
 from .models import Book
-from django.contrib.auth import authenticate
 
 
 
@@ -101,33 +100,4 @@ def delete_book(request, book_id):
         return HttpResponse("Book deleted successfully!")
     return render(request, "relationship_app/delete_book.html", {"book": book})
 
-
-def register_view(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect("home")  # Change "home" to your homepage name
-    else:
-        form = UserCreationForm()
-    return render(request, "register.html", {"form": form})
-
-
-def login_view(request):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect("home")  # change "home" to your homepage url name
-        else:
-            return render(request, "login.html", {"error": "Invalid username or password"})
-    return render(request, "login.html")
-
-
-def logout_view(request):
-    logout(request)
-    return redirect("login")  # redirect back to login page
 

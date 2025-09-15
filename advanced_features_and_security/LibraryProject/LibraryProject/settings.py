@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bookshelf',
-    'relationship_app',
-    'accounts',
-    'csp',
+    "bookshelf",
+    "relationship_app",
+    "accounts",
+    "csp",
 
 ]
 

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Details</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; }
+        h1 { color: #2c3e50; }
+        .library-info { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        ul { list-style-type: none; padding: 0; }
+        li { background: #fff; margin: 8px 0; padding: 10px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .title { font-weight: bold; }
+        .author { color: #555; }
+    </style>
+</head>
+<body>
+    <h1>Library Details</h1>
+
+    <!-- Static Example Data -->
+    <div class="library-info">
+        <h2>Central City Library</h2>
+        <p><strong>Location:</strong> Downtown, Main Street</p>
+        <p><strong>Description:</strong> A historic public library with a large collection of classics and modern literature.</p>
+    </div>
+
+    <h2>Sample Books in This Library</h2>
+    <ul>
+        <li><span class="title">War and Peace</span> — <span class="author">Leo Tolstoy</span></li>
+        <li><span class="title">Crime and Punishment</span> — <span class="author">Fyodor Dostoevsky</span></li>
+        <li><span class="title">Jane Eyre</span> — <span class="author">Charlotte Brontë</span></li>
+        <li><span class="title">The Odyssey</span> — <span class="author">Homer</span></li>
+        <li><span class="title">Brave New World</span> — <span class="author">Aldous Huxley</span></li>
+    </ul>
+
+    <!-- Dynamic Django Section -->
+    <h2>Books from Database</h2>
+    <ul>
+        {% for book in library.book_set.all %}
+            <li>
+                <span class="title">{{ book.title }}</span> — 
+                <span class="author">{{ book.author }}</span>
+            </li>
+        {% empty %}
+            <li>No books found in this library.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

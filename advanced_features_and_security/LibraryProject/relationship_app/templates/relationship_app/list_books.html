@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book List</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; }
+        h1 { color: #333; }
+        ul { list-style-type: none; padding: 0; }
+        li { background: #fff; margin: 8px 0; padding: 12px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .title { font-weight: bold; }
+        .author { color: #555; }
+    </style>
+</head>
+<body>
+    <h1>Available Books</h1>
+
+    <!-- Static sample list of 5 books -->
+    <ul>
+        <li>
+            <span class="title">To Kill a Mockingbird</span> — 
+            <span class="author">Harper Lee</span>
+        </li>
+        <li>
+            <span class="title">1984</span> — 
+            <span class="author">George Orwell</span>
+        </li>
+        <li>
+            <span class="title">Pride and Prejudice</span> — 
+            <span class="author">Jane Austen</span>
+        </li>
+        <li>
+            <span class="title">The Great Gatsby</span> — 
+            <span class="author">F. Scott Fitzgerald</span>
+        </li>
+        <li>
+            <span class="title">Moby-Dick</span> — 
+            <span class="author">Herman Melville</span>
+        </li>
+    </ul>
+
+    
+    <h2>Books from Database</h2>
+    <ul>
+        {% for book in books %}
+            <li>
+                <span class="title">{{ book.title }}</span> — 
+                <span class="author">{{ book.author }}</span>
+            </li>
+        {% empty %}
+            <li>No books available.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

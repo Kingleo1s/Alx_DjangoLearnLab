@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,10 +38,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     'bookshelf',
     'relationship_app',
     'accounts',
     'csp',
+=======
+    "bookshelf",
+    "relationship_app",
+    "accounts",
+    "csp",
+>>>>>>> 2060982dd9b3b3ece3275acf91fb247f5f8822b2
 
 ]
 
@@ -139,6 +147,10 @@ DEBUG = False
 ALLOWED_HOSTS = ["yourdomain.com", "127.0.0.1", "localhost"]
 
 # --- Security Settings ---
+<<<<<<< HEAD
+=======
+SECURE_SSL_REDIRECT = True
+>>>>>>> 2060982dd9b3b3ece3275acf91fb247f5f8822b2
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = "DENY"
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -155,5 +167,9 @@ CSP_DEFAULT_SRC = ("'self'",)
 CSP_STYLE_SRC = ("'self'", "https://fonts.googleapis.com")
 CSP_SCRIPT_SRC = ("'self'", "https://cdn.jsdelivr.net")
 
+<<<<<<< HEAD
 
 
+=======
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+>>>>>>> 2060982dd9b3b3ece3275acf91fb247f5f8822b2

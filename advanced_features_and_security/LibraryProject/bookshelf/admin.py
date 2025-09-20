@@ -26,6 +26,9 @@ class CustomUserAdmin(UserAdmin):
     )
 
 
+
+
+
 admin.site.register(Book, BookAdmin)
 
 

@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e931224f-5aa6-4def-b5bc-df093ed86fc1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/advanced_features_and_security/LibraryProject/LibraryProject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/advanced_features_and_security/LibraryProject/LibraryProject/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/advanced_features_and_security/LibraryProject/LibraryProject/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/advanced_features_and_security/LibraryProject/LibraryProject/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/advanced_features_and_security/LibraryProject/bookshelf/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/advanced_features_and_security/LibraryProject/bookshelf/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/django-models/LibraryProject/relationship_app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/django-models/LibraryProject/relationship_app/models.py" afterDir="false" />
-    </list>
+    <list default="true" id="e931224f-5aa6-4def-b5bc-df093ed86fc1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

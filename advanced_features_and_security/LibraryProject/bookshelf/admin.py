@@ -14,21 +14,21 @@ class BookAdmin(admin.ModelAdmin):
 class CustomUserAdmin(UserAdmin):
     
     list_display = ("username", "email", "first_name", "last_name", "date_of_birth", "is_staff")
-
-    
     fieldsets = UserAdmin.fieldsets + (
         ("Additional Info", {"fields": ("date_of_birth", "profile_photo")}),
     )
-
-    
     add_fieldsets = UserAdmin.add_fieldsets + (
         ("Additional Info", {"fields": ("date_of_birth", "profile_photo")}),
     )
 
 
+<<<<<<< HEAD
 
 
 
+=======
+admin.site.register(CustomUser, CustomUserAdmin)
+>>>>>>> 94cebcefe98256fd1f50b32cac217cc370d41f63
 admin.site.register(Book, BookAdmin)
 
 

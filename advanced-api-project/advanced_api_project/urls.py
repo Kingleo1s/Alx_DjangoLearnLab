@@ -17,9 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from api.views import AuthorViewSet, BookViewSet
+
+from api_project.api.views import BookViewSet
+
+#from api.views import AuthorViewSet, BookViewSet
 
 router = routers.DefaultRouter()
+
+
+class AuthorViewSet:
+    pass
+
+
 router.register(r'authors', AuthorViewSet)
 router.register(r'books', BookViewSet)
 
@@ -28,6 +37,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),  # include API routes
+    path('api/', include('api.urls')),
 ]
 

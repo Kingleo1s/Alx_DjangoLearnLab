@@ -1,10 +1,11 @@
+import django_filters
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from .models import Author, Book
 from .serializers import AuthorSerializer, BookSerializer
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
-
+from django_filters import rest_framework
 from rest_framework import generics
 
 
@@ -48,6 +49,7 @@ class BookListView(generics.ListAPIView):
         search_fields = ['title', 'author__name']  # searching
         ordering_fields = ['title', 'publication_year']  # ordering
         ordering = ['title']  # default ordering
+filter_backends = [django_filters.DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
 
 
 # ✅ Retrieve a single book by ID

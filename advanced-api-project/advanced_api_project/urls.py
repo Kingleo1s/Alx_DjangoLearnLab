@@ -17,18 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-
-from api_project.api.views import BookViewSet
-
-#from api.views import AuthorViewSet, BookViewSet
+from api.views import AuthorViewSet, BookViewSet
 
 router = routers.DefaultRouter()
-
-
-class AuthorViewSet:
-    pass
-
-
 router.register(r'authors', AuthorViewSet)
 router.register(r'books', BookViewSet)
 

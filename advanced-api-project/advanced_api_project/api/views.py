@@ -1,11 +1,21 @@
-from api.models import Author, Book
-from api.serializers import AuthorSerializer
+from rest_framework import viewsets
+from .models import Author, Book
+from .serializers import AuthorSerializer, BookSerializer
 
-a1 = Author.objects.create(name="George Orwell")
-Book.objects.create(title="1984", publication_year=1949, author=a1)
-Book.objects.create(title="Animal Farm", publication_year=1945, author=a1)
 
-serializer = AuthorSerializer(a1)
-print(serializer.data)
-# Output includes author details + nested books
+class AuthorViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows authors to be viewed or edited.
+    Includes nested books via AuthorSerializer.
+    """
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
 
+
+class BookViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows books to be viewed or edited.
+    Includes validation for publication_year in BookSerializer.
+    """
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer

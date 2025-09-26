@@ -1,9 +1,12 @@
-from rest_framework import viewsets, generics
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from .models import Author, Book
 from .serializers import AuthorSerializer, BookSerializer
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
+
+from rest_framework import generics
+
 
 
 class AuthorViewSet(viewsets.ModelViewSet):

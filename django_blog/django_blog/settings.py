@@ -54,7 +54,8 @@ ROOT_URLCONF = 'django_blog.urls'
 
 STATIC_URL = 'static/'
 LOGIN_REDIRECT_URL = 'blog:profile'
-LOGOUT_REDIRECT_URL = "blog:login"
+LOGOUT_REDIRECT_URL = "blog:home"
+LOGIN_URL = 'login'
 
 
 MEDIA_URL = "/media/"

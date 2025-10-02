@@ -4,13 +4,18 @@ from .forms import SignUpForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView
 from .forms import PostForm
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.views.generic import UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse, reverse_lazy
 from .models import Post,Comment
 from .forms import CommentForm
+from django.utils.text import slugify
+from django.shortcuts import get_object_or_404
+from django.db.models import Q
+from django.views.generic import UpdateView, DeleteView
+from .models import Tag
+
 
 
 def register(request):
@@ -73,36 +78,65 @@ class PostDetailView(DetailView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
-    template_name = "blog/post_form.html"   # blog/templates/blog/post_form.html
+    template_name = "blog/post_form.html"
 
     def form_valid(self, form):
-        # set the logged-in user as author before saving
         form.instance.author = self.request.user
-        return super().form_valid(form)
+        response = super().form_valid(form)
+        # handle tags (list from cleaned_data)
+        tag_names = form.cleaned_data.get("tags", []) or []
+        self.object.tags.clear()
+        for name in tag_names:
+            tag_obj, _ = Tag.objects.get_or_create(name=name, defaults={"slug": slugify(name)})
+            self.object.tags.add(tag_obj)
+        return response
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     form_class = PostForm
     template_name = "blog/post_form.html"
 
+    def get_initial(self):
+        initial = super().get_initial()
+        # prefill tags field as comma-separated names
+        initial_tags = ", ".join([t.name for t in self.get_object().tags.all()])
+        initial["tags"] = initial_tags
+        return initial
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        tag_names = form.cleaned_data.get("tags", []) or []
+        self.object.tags.clear()
+        for name in tag_names:
+            tag_obj, _ = Tag.objects.get_or_create(name=name, defaults={"slug": slugify(name)})
+            self.object.tags.add(tag_obj)
+        return response
+
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
 
-class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Post
-    template_name = "blog/post_confirm_delete.html"
-    success_url = reverse_lazy("blog:posts")
+# Tag view: show posts for a tag
+def tag_posts(request, tag_slug):
+    tag = get_object_or_404(Tag, slug=tag_slug)
+    posts = tag.posts.order_by("-published_date").all()
+    context = {"tag": tag, "posts": posts}
+    return render(request, "blog/tag_posts.html", context)
 
-    def test_func(self):
-        post = self.get_object()
-        return self.request.user == post.author
+# Search view
+def search(request):
+    q = request.GET.get("q", "").strip()
+    results = []
+    if q:
+        # search title, content, and tags (tag name)
+        results = Post.objects.filter(
+            Q(title__icontains=q) |
+            Q(content__icontains=q) |
+            Q(tags__name__icontains=q)
+        ).distinct().order_by("-published_date")
+    context = {"query": q, "results": results}
+    return render(request, "blog/search_results.html", context)
 
-
-# blog/views.py (append)
-
-
-@login_required
 class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
     form_class = CommentForm

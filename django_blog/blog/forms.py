@@ -50,6 +50,19 @@ class CommentForm(forms.ModelForm):
                 "placeholder": "Leave a respectful comment..."
             })
         }
+        tags = forms.CharField(
+            required=False,
+            help_text="Add tags separated by commas. e.g. django,python,web",
+            widget=forms.TextInput(attrs={"placeholder": "tag1, tag2, tag3"})
+        )
+
+    def clean_tags(self):
+        raw = self.cleaned_data.get("tags", "")
+        # normalize: split by commas, strip whitespace, ignore empties, lower-case distinct
+        tag_names = [t.strip() for t in raw.split(",") if t.strip()]
+        # optional: validate tag length
+        tag_names = [t[:50] for t in tag_names]
+        return tag_names
 
     def clean_content(self):
         content = (self.cleaned_data.get("content") or "").strip()
@@ -58,3 +71,9 @@ class CommentForm(forms.ModelForm):
         if len(content) < 2:
             raise forms.ValidationError("Comment is too short.")
         return content
+
+
+
+
+
+

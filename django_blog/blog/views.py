@@ -17,6 +17,21 @@ from django.views.generic import UpdateView, DeleteView
 from .models import Tag
 
 
+class PostByTagListView(ListView):
+    model = Post
+    template_name = "blog/post_list.html"
+    context_object_name = "posts"
+    paginate_by = 10
+
+    def get_queryset(self):
+        # Filter posts by tag name from URL
+        tag_name = self.kwargs.get("tag_name")
+        return Post.objects.filter(tags__name=tag_name).order_by("-published_date")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tag_name"] = self.kwargs.get("tag_name")
+        return context
 
 def register(request):
     if request.method == "POST":
@@ -123,6 +138,15 @@ def tag_posts(request, tag_slug):
     context = {"tag": tag, "posts": posts}
     return render(request, "blog/tag_posts.html", context)
 
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    template_name = "blog/post_confirm_delete.html"
+    success_url = reverse_lazy("blog:posts")
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author
+
 # Search view
 def search(request):
     q = request.GET.get("q", "").strip()
@@ -174,3 +198,6 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         comment = self.get_object()
         return self.request.user == comment.author
+
+
+

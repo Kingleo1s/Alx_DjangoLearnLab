@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
 from .models import Post
 from django.forms.widgets import Textarea
+from .models import Comment
 
 # Registration form
 class SignUpForm(UserCreationForm):
@@ -38,3 +39,22 @@ class PostForm(forms.ModelForm):
             "content": Textarea(attrs={"rows": 10, "placeholder": "Write your post here..."}),
             "title": forms.TextInput(attrs={"placeholder": "Post title"}),
         }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["content"]
+        widgets = {
+            "content": forms.Textarea(attrs={
+                "rows": 3,
+                "placeholder": "Leave a respectful comment..."
+            })
+        }
+
+    def clean_content(self):
+        content = (self.cleaned_data.get("content") or "").strip()
+        if not content:
+            raise forms.ValidationError("Comment cannot be empty.")
+        if len(content) < 2:
+            raise forms.ValidationError("Comment is too short.")
+        return content

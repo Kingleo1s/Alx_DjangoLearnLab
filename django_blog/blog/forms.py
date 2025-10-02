@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
 from .models import Post
 from django.forms.widgets import Textarea
-from .models import Comment
+from .models import Comment, Tag
 
 # Registration form
 class SignUpForm(UserCreationForm):
@@ -30,15 +30,36 @@ class ProfileUpdateForm(forms.ModelForm):
         model = Profile    # assumes you created a Profile model in models.py
         fields = ['bio', 'image']   # or whatever fields you added
 
+class TagWidget(forms.TextInput):
+    """
+    A simple widget for entering tags as comma-separated values.
+    You can later enhance this with JS libraries like Select2.
+    """
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault("attrs", {"placeholder": "Enter tags separated by commas"})
+        super().__init__(*args, **kwargs)
+
 
 class PostForm(forms.ModelForm):
+    tags = forms.CharField(required=False, widget=TagWidget())
+
     class Meta:
         model = Post
-        fields = ["title", "content"]
-        widgets = {
-            "content": Textarea(attrs={"rows": 10, "placeholder": "Write your post here..."}),
-            "title": forms.TextInput(attrs={"placeholder": "Post title"}),
-        }
+        fields = ["title", "content", "tags"]
+
+
+    def save(self, commit=True):
+        post = super().save(commit=False)
+        tags_str = self.cleaned_data.get("tags", "")
+        if commit:
+            post.save()
+            # ✅ save tags
+            tags = [t.strip() for t in tags_str.split(",") if t.strip()]
+            for tag_name in tags:
+                tag, created = Tag.objects.get_or_create(name=tag_name)
+                post.tags.add(tag)
+        return post
+
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -71,9 +92,3 @@ class CommentForm(forms.ModelForm):
         if len(content) < 2:
             raise forms.ValidationError("Comment is too short.")
         return content
-
-
-
-
-
-

@@ -25,12 +25,18 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path("post/", views.post_list, name="post"),
 
+<<<<<<< HEAD
     path("posts/<int:pk>/comments/new/", views.CommentCreateView.as_view(), name="comment_create"),
     path("comment/<int:pk>/edit/", views.CommentUpdateView.as_view(), name="comment_update"),
     path("comment/<int:pk>/delete/", views.CommentDeleteView.as_view(), name="comment_delete"),
 
     path("tags/<slug:tag_slug>/", views.tag_posts, name="tag_posts"),
     path("search/", views.search, name="search"),
+=======
+    path("post/<int:pk>/comments/new/", views.CommentCreateView.as_view(), name="comment_create"),
+    path("comment/<int:pk>/update/", views.CommentUpdateView.as_view(), name="comment_update"),
+    path("comment/<int:pk>/delete/", views.CommentDeleteView.as_view(), name="comment_delete"),
+>>>>>>> 90cdcf092bc88016f6325aea7d238971c57a9fbf
 
 ]
 

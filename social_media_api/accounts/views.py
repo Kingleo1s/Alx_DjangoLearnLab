@@ -8,12 +8,25 @@ from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from django.shortcuts import get_object_or_404
+from .models import CustomUser
 
 User = get_user_model()
 
-class RegisterView(generics.CreateAPIView):
-    queryset = User.objects.all()
+class RegisterView(generics.GenericAPIView):
+    queryset = CustomUser.objects.all()
     serializer_class = RegisterSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+            "message": "User registered successfully"
+        }, status=status.HTTP_201_CREATED)
+
 
 
 class LoginView(APIView):
